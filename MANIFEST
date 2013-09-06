@@ -1,0 +1,8 @@
+Changes
+Makefile.PL
+MANIFEST
+ppport.h
+README
+SAR.xs
+t/Regexp-SAR.t
+lib/Regexp/SAR.pm
