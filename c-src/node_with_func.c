@@ -31,15 +31,12 @@ sarNodeWithFuncLL_p sar_buildNWFNode_c() {
   return NWFNode;
 }
 
-void sar_addNWF_c(sarNodeWithFuncLL_p firstNWF, sarNode_p node) {
-  sarNodeWithFuncLL_p currNWF = firstNWF;
-  while ( currNWF->next != (sarNodeWithFuncLL_p)NULL ) {
-    currNWF = currNWF->next;
-  }
+sarNodeWithFuncLL_p sar_addNWF_c(sarNodeWithFuncLL_p nwf, sarNode_p currNode) {
+	nwf->node = currNode;
+	sarNodeWithFuncLL_p nextNWF =  sar_buildNWFNode_c();
+	nwf->next = nextNWF;
 
-  sarNodeWithFuncLL_p lastNWFNode =  sar_buildNWFNode_c();
-  currNWF->node = node;
-  currNWF->next = lastNWFNode;
+	return nextNWF;
 }
 
 
@@ -47,7 +44,7 @@ void sar_clearNWFNodes_c(sarNodeWithFuncLL_p firstNWF) {
   sarNodeWithFuncLL_p currNWF = firstNWF;
   while ( currNWF->node != (sarNode_p)NULL ) {
     sarNode_p currNode = currNWF->node;
-    currNode->nodeCalled = 0;
+    currNode->getCallFunc = SAR_FALSE;
     sarNodeWithFuncLL_p nextNWF = currNWF->next;
     Safefree(currNWF);
     currNWF = nextNWF;
