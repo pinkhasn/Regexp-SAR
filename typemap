@@ -1,2 +1,3 @@
-sarNode_t * T_PTR
+sarRootNode_t * T_PTR
+sarCharsTreeNode_t * T_PTR
 
