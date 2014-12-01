@@ -1,7 +1,0 @@
-Changes
-Makefile.PL
-MANIFEST
-README
-SAR.xs
-t/Regexp-SAR.t
-lib/Regexp/SAR.pm
