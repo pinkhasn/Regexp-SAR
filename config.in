@@ -1,3 +1,0 @@
-
-INCLUDE         = ./c-src
-LIB             = ./c-src
