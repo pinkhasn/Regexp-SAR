@@ -84,7 +84,7 @@ Regexp::SAR (Simple API for Regexp) module build trie structure
 for many regular expressions and store match handler for each
 regular expression that will be called when match occurs.
 There is no limit for number of regular expressions.
-On match handler called immediately and it get matching start
+Handler called immediately on match and it get matching start
 and end positions in matched string. Matching can be started from
 any point in matching string. Match handler can decide from which
 point matching should continue or it can stop matching at all.
@@ -112,7 +112,7 @@ Matching end is position after last matching character.
                               my ($from, $to) = @_;
                               # $from is 1
                               # $to is 4
-                              $sar->stopMatch(); 
+                              $sar->stopMatch();
                           });
   $sar->match($string);
 
@@ -162,17 +162,16 @@ Continue matching process character by character even if there was match.
   $sar->match($string);
 
 Above code will print 3 times strings: '123', '23', '3'
-In case it should be matched only once use C<continueFrom>. 
+In case it should be matched only once use C<continueFrom>.
 
 =item *
 
 Call all matching handlers that could be found from matching position.
 
   my $sar = new Regexp::SAR;
-  my $string = 'new york';
   $sar->addRegexp('new', sub { print "new found\n"; });
   $sar->addRegexp('new york', sub { print "new york found\n"; });
-  $sar->match($string);
+  $sar->match('new york');
 
 Above code will print "new found", then print "new york found"
 
@@ -182,12 +181,11 @@ Call all matching handlers from different regular expressions
 that match same matched string.
 
   my $sar = new Regexp::SAR;
-  my $string = '1';
   $sar->addRegexp('1', sub { print "one found\n"; });
-  $sar->addRegexp('\d', sub { print "number found\n"; });
-  $sar->match($string);
+  $sar->addRegexp('\d', sub { print "digit found\n"; });
+  $sar->match('1');
 
-Above code will print both 'one found' and 'number found'
+Above code will print both 'one found' and 'digit found'
 
 =back
 
