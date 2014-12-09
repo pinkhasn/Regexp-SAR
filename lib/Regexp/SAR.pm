@@ -87,13 +87,15 @@ and end positions in matched string. Matching can be started from
 any point in matching string. Match handler can decide from which
 point matching should continue or it can stop matching at all.
 
-=method new()
+=head1 METHODS
+
+=head2 new()
 
 Create new Regexp::SAR object. Every object store it's own trie
 structure separately. When object goes out of scope object and it's
 internal data structure will be cleared from memory.
 
-=method addRegexp
+=head2 addRegexp
 
 Add regular expression for handling. First parameter is regular
 expression string. Second parameter is reference to subroutine
@@ -112,35 +114,37 @@ Matching end is position after last matching character.
                           });
   $sar->match($string);
 
-=method match
+=head2 match
 
 Process matching all added regular expressions on matching string
 passed to C<match> as parameter. C<match> can accept matching string
 as reference to scalar, it useful when matching string is very long.
 
-=method matchFrom
+=head2 matchFrom
 
 Process matching from specific position. Get two parameters: matching
 string and number from which start processing. C<match> subroutine
 is syntactic sugar form C<matchFrom> when second parameter is 0.
 
-=method matchAt
+=head2 matchAt
 
 Process matching from specific position and do not continue on next
 characters.
 
-=method continueFrom
+=head2 continueFrom
 
 C<continueFrom> subroutine called in matching handler and define
 from which position continue matching after it finished matching
 on current position.
 
-=method stopMatch
+=head2 stopMatch
 
 C<stopMatch> subroutine called in matching handler and send signal
 to Regexp::SAR object do not continue matching on next characters.
 
-=head Matching rules
+=head1 Matching rules
+
+=over
 
 =item *
 
@@ -183,7 +187,11 @@ that match same matched string.
 
 Above code will print both 'one found' and 'number found'
 
-=head Character class abbreviations
+=back
+
+=head1 Character class abbreviations
+
+=over
 
 =item *
 
@@ -209,7 +217,11 @@ Above code will print both 'one found' and 'number found'
 
 '\^' matches any character that is not followed character or class abbreviation
 
-=head Matching repetitions
+=back
+
+=head1 Matching repetitions
+
+=over
 
 =item *
 
@@ -223,7 +235,9 @@ Above code will print both 'one found' and 'number found'
 
 '+' means: match 1 or more times
 
-=head '\' escape character
+=back
+
+=head1 '\' escape character
 
 For matching '\' character in matching string regular expression string should
 iclude it 4 times '\\\\'.
@@ -233,7 +247,7 @@ iclude it 4 times '\\\\'.
   $sar->addRegexp('b\\\\c', sub { print "Matched\n"; });
   $sar->match($string);
 
-=head Unicode support
+=head1 Unicode support
 
 Currently this module does not support unicode matching
 
