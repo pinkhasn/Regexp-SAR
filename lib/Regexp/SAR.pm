@@ -1,7 +1,9 @@
 package Regexp::SAR;
 
 
-# ABSTRACT: perl module implementing regular expression engine for handling matching events
+=head1 NAME
+
+Regexp::SAR - perl module implementing regular expression engine for handling matching events (Simple API Regexp)
 
 =head1 SYNOPSIS
 
@@ -251,6 +253,16 @@ iclude it 4 times '\\\\'.
 
 Currently this module does not support unicode matching
 
+=head1 AUTHOR
+
+  Pinkhas Nisanov <pinkhas@nisanov.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2012 by Pinkhas Nisanov.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
