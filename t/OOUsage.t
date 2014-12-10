@@ -29,7 +29,7 @@ BEGIN { use_ok('Regexp::SAR') }
     $sar->addRegexp( "abcd", sub { $pathRes += 1; } );
     my $str = "qqqqqqqqqqqq";
     $sar->matchRef(\$str);
-    is( $pathRes, 0, "match once" );
+    is( $pathRes, 0, "" );
 }
 
 {
@@ -38,7 +38,7 @@ BEGIN { use_ok('Regexp::SAR') }
     $sar->addRegexp( "abcd", sub { $pathRes += 1; } );
     my $str = "qabcde abcd f";
     $sar->match(\$str);
-    is( $pathRes, 2, "match once" );
+    is( $pathRes, 2, "" );
 }
 
 {
@@ -47,7 +47,7 @@ BEGIN { use_ok('Regexp::SAR') }
     $sar->addRegexp( "abcd", sub { $pathRes += 1; } );
     my $mStr = "qabcdef";
     $sar->match(\$mStr);
-    is( $pathRes, 1, "match once" );
+    is( $pathRes, 1, "" );
 }
 
 {
@@ -260,7 +260,7 @@ BEGIN { use_ok('Regexp::SAR') }
         }
         elsif ($matchCount == $elemNum) {
             $matchEnd = $from;
-            $sar->stopMatch(); 
+            $sar->stopMatch();
         }
     } );
     $sar->match($mStr);
@@ -361,7 +361,7 @@ BEGIN { use_ok('Regexp::SAR') }
     $sar1->addRegexp('a+', sub {
                                 my ($from, $to) = @_;
                                 $sar2->matchAt($string, $to);
-                                $sar1->stopMatch(); 
+                                $sar1->stopMatch();
                            });
     $sar1->match($string);
 
