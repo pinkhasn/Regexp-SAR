@@ -75,7 +75,7 @@ Regexp::SAR - perl module implementing regular expression engine for handling ma
     #################################################
     #negative matching
     my $sar5 = new Regexp::SAR;
-    $sar5->addRegexp('a\^\d+c', sub { print "Matched\n"; });
+    $sar5->addRegexp('a\^\d+b', sub { print "Matched\n"; });
     $sar5->match('axyzb');
 
 =head1 DESCRIPTION
