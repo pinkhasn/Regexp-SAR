@@ -368,7 +368,24 @@ BEGIN { use_ok('Regexp::SAR') }
     is($matched, 1);
 }
 
+{
+    my $sar = new Regexp::SAR;
+    my $alphaPos;
+    my $anchorPos;
+    $sar->addRegexp('\a', sub { $alphaPos = $_[0] });
+    $sar->addRegexp('\d', sub {
+                                my $digitPos = $_[0];
+                                if (defined $alphaPos) {
+                                    my $dist = $digitPos - $alphaPos;
+                                    if ($dist == 1) {
+                                        $anchorPos = $digitPos;
+                                    }
+                                }
+                              });
+    $sar->match('aa bb2cc dd');
 
+    is($anchorPos, 5);
+}
 
 #
 ###############################################
