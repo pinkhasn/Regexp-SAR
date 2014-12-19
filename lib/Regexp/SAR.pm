@@ -1,15 +1,15 @@
 package Regexp::SAR;
-# ABSTRACT: Regexp::SAR - perl module implementing regular expression engine for handling matching events (Simple API for Regexp)
+# ABSTRACT: Regexp::SAR - a Perl module implementing a regular expression engine for handling matching events (Simple API for Regexp)
 
 =head1 NAME
 
-Regexp::SAR - perl module implementing regular expression engine for handling matching events (Simple API for Regexp)
+Regexp::SAR - a Perl module implementing a regular expression engine for handling matching events (Simple API for Regexp)
 
 =head1 SYNOPSIS
 
     use Regexp::SAR;
     
-    my $sar1 = new Regexp::SAR;
+    my $sar1 = Regexp::SAR->new;
     my $matched = 0;
     $sar1->addRegexp('abc', sub {$matched = 1;});
     $sar1->match('mm abc nn');
@@ -20,7 +20,7 @@ Regexp::SAR - perl module implementing regular expression engine for handling ma
     #################################################
     #index many regexp for single match run
     my @matched;
-    my $sar2 = new Regexp::SAR;
+    my $sar2 = Regexp::SAR->new;
     my $regexps = [
                     ['ab+c', 'First Match'],
                     ['\d+', 'Second Match'],
@@ -42,7 +42,7 @@ Regexp::SAR - perl module implementing regular expression engine for handling ma
 
     #################################################
     #get third match and stop
-    my $sar3 = new Regexp::SAR;
+    my $sar3 = Regexp::SAR->new;
     my $matchedStr3;
     my $matchCount = 0;
     my $string3 = 'aa11 bb22 cc33 dd44';
@@ -62,7 +62,7 @@ Regexp::SAR - perl module implementing regular expression engine for handling ma
     
     #################################################
     #get match only at certain position
-    my $sar4 = new Regexp::SAR;
+    my $sar4 = Regexp::SAR->new;
     my $matchedStr4;
     my $string4 = 'aa11 bb22 cc33 dd44';
     $sar4->addRegexp('\w+', sub {
@@ -74,37 +74,37 @@ Regexp::SAR - perl module implementing regular expression engine for handling ma
     
     #################################################
     #negative matching
-    my $sar5 = new Regexp::SAR;
+    my $sar5 = Regexp::SAR->new;
     $sar5->addRegexp('a\^\d+b', sub { print "Matched\n"; });
     $sar5->match('axyzb');
 
 =head1 DESCRIPTION
 
-Regexp::SAR (Simple API for Regexp) module build trie structure
-for many regular expressions and store match handler for each
-regular expression that will be called when match occurs.
-There is no limit for number of regular expressions.
-Handler called immediately on match and it get matching start
-and end positions in matched string. Matching can be started from
-any point in matching string. Match handler can decide from which
-point matching should continue or it can stop matching at all.
+The Regexp::SAR (= "Simple API for Regexp") module builds a trie structure
+for many regular expressions and stores a match handler for each
+regular expression that will be called when a match occurs.
+There is no limit for the number of regular expressions.
+A handler is called immediately on match and it gets matching start
+and end positions in the matched string. Matching can be started from
+any point in the matched string. A match handler can decide from which
+point matching should continue, or it can completely stop matching.
 
 =head1 METHODS
 
 =head2 new()
 
-Create new Regexp::SAR object. Every object store it's own trie
-structure separately. When object goes out of scope object and it's
-internal data structure will be cleared from memory.
+Create a new Regexp::SAR object. Every object stores its own trie
+structure separately. When the object goes out of scope, the object and
+its internal data structures will be cleared from memory.
 
 =head2 addRegexp
 
-Add regular expression for handling. First parameter is regular
-expression string. Second parameter is reference to subroutine
-that will be called when match on this regexp occurs. Handler
-subroutine get as input two integers, matching start and matching
-end. Matching start is position of first matching character.
-Matching end is position after last matching character.
+Add a regular expression to handle. The first parameter is a regular
+expression string. The Second parameter is a reference to a subroutine
+that will be called when a match on this regexp occurs. The handler
+subroutine receives two integers as input, the match’s start and the
+match’s end. The start is the position of the first matched character.
+The end is the position after the last matched character.
 
   my $sar = new Regexp::SAR;
   my $string = 'a123b';
@@ -118,31 +118,32 @@ Matching end is position after last matching character.
 
 =head2 match
 
-Process matching all added regular expressions on matching string
-passed to C<match> as parameter. C<match> can accept matching string
-as reference to scalar, it useful when matching string is very long.
+Process matching all the added regular expressions on the matched string
+passed to C<match> as parameter. C<match> can accept the matched string
+as a reference to a scalar, which is useful when the matched string is
+very long.
 
-=head2 matchFrom
+=head2 $sar->matchFrom($str, $pos)
 
-Process matching from specific position. Get two parameters: matching
-string and number from which start processing. C<match> subroutine
-is syntactic sugar form C<matchFrom> when second parameter is 0.
+Perform the matching from a specific position. Receives two parameters:
+the matched string and a number from which to start processing. The C<match>
+method calls C<matchFrom> with the second paramater as 0.
 
 =head2 matchAt
 
-Process matching from specific position and do not continue on next
+Perform the matching from a specific position, and do not continue on the next
 characters.
 
 =head2 continueFrom
 
-C<continueFrom> subroutine called in matching handler and define
-from which position continue matching after it finished matching
-on current position.
+The C<continueFrom> method can be called in the matching handler, and defines
+from which position to continue matching, after it finished matching
+the current position.
 
 =head2 stopMatch
 
-C<stopMatch> subroutine called in matching handler and send signal
-to Regexp::SAR object do not continue matching on next characters.
+The C<stopMatch> subroutine can be called in the matching handler, and
+instructs the Regexp::SAR object to not continue matching the next characters.
 
 =head1 Matching rules
 
@@ -150,9 +151,10 @@ to Regexp::SAR object do not continue matching on next characters.
 
 =item *
 
-Continue matching process character by character even if there was match.
+Continue the matching process, character by character, even if there was a
+match.
 
-  my $sar = new Regexp::SAR;
+  my $sar = Regexp::SAR->new;
   my $string = 'a123b';
   $sar->addRegexp('\d+', sub {
                               my ($from, $to) = @_;
@@ -161,14 +163,14 @@ Continue matching process character by character even if there was match.
                           });
   $sar->match($string);
 
-Above code will print 3 times strings: '123', '23', '3'
+The above code will print 3 strings: '123', '23', '3'
 In case it should be matched only once use C<continueFrom>.
 
 =item *
 
-Call all matching handlers that could be found from matching position.
+Call all the matching handlers that could be found from the matching position.
 
-  my $sar = new Regexp::SAR;
+  my $sar = Regexp::SAR->new;
   $sar->addRegexp('new', sub { print "new found\n"; });
   $sar->addRegexp('new york', sub { print "new york found\n"; });
   $sar->match('new york');
@@ -177,15 +179,15 @@ Above code will print "new found", then print "new york found"
 
 =item *
 
-Call all matching handlers from different regular expressions
-that match same matched string.
+Call all the matching handlers from different regular expressions,
+which match the same matched string.
 
-  my $sar = new Regexp::SAR;
+  my $sar = Regexp::SAR->new;
   $sar->addRegexp('1', sub { print "one found\n"; });
   $sar->addRegexp('\d', sub { print "digit found\n"; });
   $sar->match('1');
 
-Above code will print both 'one found' and 'digit found'
+The above code will print both 'one found' and 'digit found'
 
 =back
 
@@ -249,7 +251,7 @@ iclude it 4 times '\\\\'.
 
 =head1 Unicode support
 
-Currently this module does not support unicode matching
+Currently this module does not support Unicode matching
 
 =head1 Examples
 
