@@ -270,7 +270,6 @@ XSLoader::load( 'Regexp::SAR' );
 sub new {
     my $class = shift;
 
-    my $obj = [];
     my $rootNode = Regexp::SAR::buildRootNode();
     return bless \$rootNode, $class;
 }
